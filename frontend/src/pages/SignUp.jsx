@@ -1,0 +1,82 @@
+import { useState } from "react"
+import {Link} from 'react-router-dom'
+
+export function SignUp ({addUserMethod}) {
+    
+    const [newUser, setNewUser] = useState({
+        name: "",
+        email: "",
+        password: ""
+    })
+
+    async function handleClick () {
+        await addUserMethod(newUser);
+
+        setNewUser({
+            name: "",
+            email: "",
+            password: ""
+        })
+    }
+    
+    return (
+        <>
+        
+        <div className="flex justify-center items-center h-screen">
+
+            <div className="bg-white p-6 rounded-lg flex flex-col gap-2 text-gray-700">
+                <p className="font-medium text-xl text-gray-900">Create an account:</p>
+                
+                <label htmlFor="name-input" className="text-sm">Your name:
+                <input 
+                type="text"
+                id="name-input"
+                placeholder="Name..."
+                className="border border-gray-300 rounded-lg mt-2 p-2 w-full"
+                value={newUser.name}
+                onChange={(e) => setNewUser(prev => ({
+                    ...prev,
+                    name: e.target.value
+                }))}
+                />
+                </label>
+                
+                <label htmlFor="email-input" className="text-sm">Your email:
+                <input 
+                type="email"
+                id="email-input"
+                placeholder="Email..."
+                className="border border-gray-300 rounded-lg mt-2 p-2 w-full"
+                value={newUser.email}
+                onChange={(e) => setNewUser(prev => ({
+                    ...prev,
+                    email: e.target.value
+                }))}
+                />
+                </label>
+                <label htmlFor="password-input" className="text-sm">Your password:
+                <input 
+                type="password"
+                id="password-input"
+                placeholder="Password..."
+                className="border border-gray-300 rounded-lg mt-2 p-2 w-full"
+                value={newUser.password}
+                onChange={(e) => setNewUser(prev => ({
+                    ...prev,
+                    password: e.target.value
+                }))}
+                />
+                </label>
+
+                <button 
+                onClick={handleClick}
+                className="bg-emerald-700 py-1 rounded-lg text-white cursor-pointer hover:bg-emerald-800 active:scale-95 duration-300">Sign up</button>
+            
+                <p>Have an account? <Link to={`/login`} className="text-emerald-700 underline">Log in</Link></p>
+            </div>
+
+        </div>
+        
+        </>
+    )
+}

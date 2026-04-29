@@ -1,0 +1,18 @@
+import User from "./User.js";
+
+async function checkAuth (req, res) {
+    try {
+        const user = await User.findById(req.userID);
+        if (!user) {
+            return res.status(401).json({success: false, message: "Failed to find user"})
+        }
+        res.status(200).json({success: true, message: "Found user", user: {
+            ...user._doc,
+            password: null
+        }})
+    } catch (error) {
+        return res.status(401).json({success: false, message: "Failed to check auth"})
+    }
+}
+
+export default checkAuth;
