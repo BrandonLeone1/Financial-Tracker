@@ -1,13 +1,19 @@
 import { Link } from "react-router";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
-export function ExpensePieChart ({expenseInfo, loadingPieCharts}) {
+export function ExpensePieChart ({expenseInfo, loadingPieCharts, convertFormat}) {
    
-   const COLORS = [
-  "#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F",
-  "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#BAB0AC",
-  "#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD",
-  "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"
+const COLORS = [
+  "#E07A5F", // coral
+  "#F28482", // soft salmon
+  "#C97C5D", // clay orange
+  "#B56576", // muted rose
+  "#A44A3F", // brick red
+  "#E29578", // terracotta
+  "#D4A373", // warm sand
+  "#8D6E63", // earthy brown
+  "#F2CC8F", // soft beige accent
+  "#D66A6A"  // dusty red
 ];
 
     const coloredData = expenseInfo.map((datapoint, index) => ( {
@@ -18,12 +24,12 @@ export function ExpensePieChart ({expenseInfo, loadingPieCharts}) {
     if (loadingPieCharts) {
     return (
         <div className="flex items-center justify-center h-full">
-        <div class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-400 border-t-transparent"></div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-400 border-t-transparent"></div>
         </div>
     )
    }
 
-    if (expenseInfo.length === 0) {
+    if (coloredData.length === 0) {
     return (
         <>
         <div className="flex flex-col gap-2 items-center justify-center h-75">
@@ -40,7 +46,7 @@ export function ExpensePieChart ({expenseInfo, loadingPieCharts}) {
     return (
         <>
 
-        <ResponsiveContainer width={"100%"} height={300}>
+        <ResponsiveContainer width={"100%"} height={350}>
         <PieChart>
             <Pie
             data={coloredData}
@@ -49,13 +55,13 @@ export function ExpensePieChart ({expenseInfo, loadingPieCharts}) {
             cx="50%"
             cy="50%"
             outerRadius={100}
-            label
+            label={({value}) => convertFormat(value)}
             >
 
             </Pie>
             
 
-            <Tooltip />
+            <Tooltip formatter={(value) => convertFormat(value)}/>
             <Legend />
         </PieChart>
         </ResponsiveContainer>

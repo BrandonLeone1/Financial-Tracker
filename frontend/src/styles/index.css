@@ -2,6 +2,12 @@
 
 .my-arrows {
     position: absolute;
-    top: 50px;
+    top: 40px;
     width: 100%;
+    
+}
+
+.my-arrows path {
+    fill: #4F46E5;
+    
 }

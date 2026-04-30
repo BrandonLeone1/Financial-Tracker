@@ -9,18 +9,17 @@ import {
 } from "recharts";
 import {motion, AnimatePresence} from 'framer-motion'
 
-export function MonthlyLineChart({expensesLastMonth, loadingLineCharts}) {
+export function MonthlyLineChart({expensesLastMonth, loadingLineCharts, convertFormat}) {
     
     const formattedData = expensesLastMonth.map(expense => ({
         ...expense,
         _id: expense._id.split("T")[0]
     })) 
-    console.log(formattedData, "formatted")
 
     if (loadingLineCharts) {
         return (
             <div className="flex items-center justify-center h-full">
-            <div class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-400 border-t-transparent"></div>
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-400 border-t-transparent"></div>
             </div>
         )
     }
@@ -36,12 +35,12 @@ export function MonthlyLineChart({expensesLastMonth, loadingLineCharts}) {
             exit={{opacity: 0, scale: 0.99}}
             transition={{duration: 0.2, ease: "easeIn"}}
         >
-        <ResponsiveContainer width={"100%"} height={300}>
+        <ResponsiveContainer width={"100%"} height={400}>
             <LineChart data={formattedData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="_id" />
-                <YAxis dataKey="total" />
-                <Tooltip />
+                <XAxis dataKey="_id" tick={{dy: 10}} />
+                <YAxis dataKey="total" tickFormatter={(value) => convertFormat(value)} width={93}/>
+                <Tooltip formatter={(value) => convertFormat(value)}/>
                 <Line type="monotone" dataKey="total" stroke="#cc000a" />
             </LineChart>
         </ResponsiveContainer>

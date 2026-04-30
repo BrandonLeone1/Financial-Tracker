@@ -406,6 +406,89 @@ app.get("/api/budgets/remaining-info", verifyToken, async (req, res) => {
     
 })
 
+app.get("/api/transactions/comparison", verifyToken, async (req, res) => {
+    try {
+        let thisWeekExpenses = new Date();
+        thisWeekExpenses.setDate(thisWeekExpenses.getDate() - 7);
+        let previousWeekExpenses = new Date();
+        previousWeekExpenses.setDate(previousWeekExpenses.getDate() - 14);
+
+        const thisWeekExpensesSummary = await Transaction.aggregate([
+            {
+                $match: {userID: req.userID, classification: "Expense", date: {$gte: thisWeekExpenses}}
+            }, {
+                $group: {_id: "$category", total: {$sum: "$amount"}}
+            }
+        ])
+
+        if (thisWeekExpensesSummary.length === 0) {
+            res.status(400).json({success: false, message: "Failed to get expense summary for this current week. Search must be wrong"})
+        }
+
+        const previousWeekExpensesSummary = await Transaction.aggregate([
+            {
+                $match: {userID: req.userID, classification: "Expense", date: {$gte: previousWeekExpenses, $lte: thisWeekExpenses}}
+            }, {
+                $group: {_id: "$category", total: {$sum: "$amount"}}
+            }
+        ])
+
+        if (previousWeekExpensesSummary.length === 0) {
+            res.status(400).json({success: false, message: "Failed to get expense summary for previous week. Search must be wrong"})
+        }
+
+        let comparisonArray = thisWeekExpensesSummary.map(expense => {
+            const match = previousWeekExpensesSummary.find(exp => exp._id === expense._id);
+
+            if (match) {
+                return {
+                    ...expense,
+                    previousWeeksTotal: match.total,
+                    changeFromPreviousWeek: (expense.total / match.total) * 100
+                }
+            } else {
+                return {
+                    ...expense,
+                    previousWeeksTotal: 0,
+                    changeFromPreviousWeek: 0
+                }
+            }
+        })
+
+        if (comparisonArray.length === 0 || !comparisonArray) {
+            res.status(400).json({success: false, message: "Failed to get expense summary for previous week. Search must be wrong"})
+        }
+
+        res.status(200).json({success:true, message: "Got data and successfully compared", data: comparisonArray})
+    } catch (error) {
+        res.status(400).json({success: false, message: "Failed to get expense summary for this current week"})
+    }
+})
+
+app.get("/api/transactions/income-last-month", verifyToken, async (req, res) => {
+    
+    let withinLastMonth = new Date();
+    withinLastMonth.setDate(withinLastMonth.getDate() - 30)
+    
+    try {
+        const incomeWithinLastMonth = await Transaction.aggregate([
+            {
+                $match: {userID: req.userID, classification: "Income", date: {$gte: withinLastMonth}}
+            }, {
+                $group: {_id: "$category", total: {$sum: "$amount"}}
+            }
+        ])
+
+        if (incomeWithinLastMonth.length === 0) {
+            return res.status(400).json({success: false, message: "Failed to get income for the last month. Search must be wrong"})
+        }
+
+        res.status(200).json({success: true, message: "Got income data for the last month", data: incomeWithinLastMonth})
+    } catch (error) {
+        return res.status(400).json({success: false, message: "Failed to get income for the last month"})
+    }
+})
+
 app.listen(5000, () => {
     connectDB();
     console.log("Started server on port 5000")

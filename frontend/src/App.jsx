@@ -28,6 +28,13 @@ function App() {
   const [deletedBudget, setDeletedBudget] = useState(false);
   const [loadingPieCharts, setLoadingPieCharts] = useState(false);
   const [loadingLineCharts, setLoadingLineCharts] = useState(false);
+  const [expenseComparisonData, setExpenseComparisonData] = useState([]);
+  const [incomeWithinLastMonth, setIncomeWithinLastMonth] = useState([])
+
+
+  
+
+
   async function addUserMethod (newUser) {
     const response = await fetch(`/api/auth/signup`, {
       method: "POST",
@@ -35,7 +42,7 @@ function App() {
       body: JSON.stringify(newUser)
     })
     const data = await response.json();
-    console.log(data.success, data.message, data.user);
+    
   }
 
   async function logInUserMethod (existingUser) {
@@ -45,7 +52,7 @@ function App() {
       body: JSON.stringify(existingUser)
     })
     const data = await response.json();
-    console.log(data.success, data.message, data.user);
+  
     if (data.success) {
       setCurrentUser(data.user);
     }
@@ -76,10 +83,10 @@ async function addTransactionMethod (newTransaction) {
     body: JSON.stringify(newTransaction)
   })
   const data = await response.json();
-  console.log(data.success, data.message)
+
   if (data.success) {
     
-    console.log(data.data)
+
     setTransactions(prev => [...prev, data.data]);
 
     setAddedTransactionSuccessfully(true);
@@ -92,7 +99,7 @@ async function addTransactionMethod (newTransaction) {
 async function getTransactions() {
   const response = await fetch(`/api/transactions`);
   const data = await response.json();
-  console.log(data.success, data.message);
+
   if (data.success) {
     setTransactions(data.data);
   }
@@ -104,7 +111,7 @@ async function deleteTransactionMethod (id) {
     headers: {"Content-Type": "application/json"}
   })
   const data = await response.json();
-  console.log(data.success, data.message)
+
   if (data.success) {
     setTransactions(prev => prev.filter(transaction => transaction._id !== id))
 
@@ -123,7 +130,7 @@ async function updateTransactionMethod (updatedTransaction) {
     body: JSON.stringify(updatedTransaction)
   });
   const data = await response.json();
-  console.log(data.success, data.message);
+
   if (data.success) {
     setTransactions(prev => prev.map(transaction => {
       if (transaction._id === data.data._id) {
@@ -142,7 +149,7 @@ async function addBudgetMethod (newBudget) {
     body: JSON.stringify(newBudget)
   })
   const data = await response.json();
-  console.log(data.success, data.message)
+
   if (data.success) {
     setBudgets(prev => [...prev, data.data])
 
@@ -157,7 +164,7 @@ async function addBudgetMethod (newBudget) {
 async function getBudgets () {
   const response = await fetch(`/api/budgets`);
   const data = await response.json();
-  console.log(data.success, data.message);
+
   if (data.success) {
     setBudgets(data.data);
   }
@@ -169,7 +176,6 @@ async function deleteBudget(id) {
     headers: {"Content-Type": "application/json"}
   });
   const data = await response.json();
-  console.log(data.success, data.message);
   if (data.success) {
     setBudgets(prev => prev.filter(budget => budget._id !== id))
 
@@ -184,7 +190,7 @@ async function deleteBudget(id) {
 async function getBudgetInfo () {
   const response = await fetch(`/api/budgets/get-info`);
   const data = await response.json();
-  console.log(data.success, data.message)
+
   if (data.success) {
     setBudgetInfo(data.data);
   }
@@ -207,7 +213,7 @@ async function editBudget (id, updatedBudget) {
     body: JSON.stringify(updatedBudget)
   });
   const data = await response.json();
-  console.log(data.success, data.message);
+
   if (data.success) {
     setBudgets(prev => prev.map(budget => {
       if (budget._id === id) {
@@ -223,8 +229,6 @@ async function getIncomeInfo () {
   setLoadingPieCharts(true)
   const response = await fetch(`/api/transactions/get-income-info`);
   const data = await response.json();
-  console.log(data.success);
-  console.log(data.message);
   if (data.success) {
     setIncomeInfo(data.data)
   }
@@ -235,7 +239,7 @@ async function getExpenseInfo () {
   setLoadingPieCharts(true)
   const response = await fetch(`/api/transactions/get-expense-info`)
   const data = await response.json();
-  console.log(data.success, data.message)
+
   if (data.success) {
     setExpenseInfo(data.data)
   }
@@ -246,19 +250,16 @@ async function getExpensesOverTime () {
   setLoadingLineCharts(true)
   const response = await fetch (`/api/transactions/expenses-over-time`);
   const data = await response.json();
-  console.log(data.success, data.message);
   if (data.success) {
     setExpensesLastWeek(data.data);
   }
   setLoadingLineCharts(false)
 }
-console.log(incomeInfo, expenseInfo, "infomormation")
 
 async function monthlyExpenseData () {
   setLoadingLineCharts(true)
   const response = await fetch (`/api/transactions/expenses-one-month`);
   const data = await response.json();
-  console.log(data.success, data.message)
   if (data.success) {
     setExpensesLastMonth(data.data)
   }
@@ -268,10 +269,38 @@ async function monthlyExpenseData () {
 async function getBudgetRisks() {
   const response = await fetch(`/api/budgets/remaining-info`);
   const data = await response.json();
-  console.log(data.success, data.message);
   if(data.success) {
     setBudgetRiskInfo(data.data)
   }
+}
+
+async function getExpenseComparison() {
+  const response = await fetch(`/api/transactions/comparison`);
+  const data = await response.json();
+  console.log(data.success, data.message)
+  if (data.success) {
+    setExpenseComparisonData(data.data)
+  }
+}
+
+async function getIncomeWithinLastMonth () {
+  const response = await fetch(`/api/transactions/income-last-month`);
+  const data = await response.json();
+  console.log(data.success, data.message);
+  if (data.success) {
+    setIncomeWithinLastMonth(data.data)
+  }
+}
+
+console.log(incomeWithinLastMonth, expensesLastMonth, "income and expenses within last month");
+
+function convertFormat (amount) {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  })
+
+  return formatter.format(amount)
 }
 
 if (isLoading) {
@@ -302,7 +331,7 @@ if (isLoading) {
       path='/dashboard'
       element={
       <ProtectedRoute currentUser={currentUser} isLoading={isLoading}>
-      <Dashboard loadingLineCharts={loadingLineCharts} getBudgetRisks={getBudgetRisks} loadingPieCharts={loadingPieCharts} budgetRiskInfo={budgetRiskInfo} expensesLastWeek={expensesLastWeek} expensesLastMonth={expensesLastMonth} getExpensesOverTime={getExpensesOverTime} expenseInfo={expenseInfo} currentUser={currentUser} transactions={transactions} getTransactions={getTransactions} budgets={budgets} getExpenseInfo={getExpenseInfo} getIncomeInfo={getIncomeInfo} incomeInfo={incomeInfo} monthlyExpenseData={monthlyExpenseData}/>
+      <Dashboard loadingLineCharts={loadingLineCharts} convertFormat={convertFormat} incomeWithinLastMonth={incomeWithinLastMonth} getIncomeWithinLastMonth={getIncomeWithinLastMonth} getExpenseComparison={getExpenseComparison} expenseComparisonData={expenseComparisonData} getBudgetRisks={getBudgetRisks} loadingPieCharts={loadingPieCharts} budgetRiskInfo={budgetRiskInfo} expensesLastWeek={expensesLastWeek} expensesLastMonth={expensesLastMonth} getExpensesOverTime={getExpensesOverTime} expenseInfo={expenseInfo} currentUser={currentUser} transactions={transactions} getTransactions={getTransactions} budgets={budgets} getExpenseInfo={getExpenseInfo} getIncomeInfo={getIncomeInfo} incomeInfo={incomeInfo} monthlyExpenseData={monthlyExpenseData}/>
       </ProtectedRoute>
     }
       />
