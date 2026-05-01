@@ -56,7 +56,7 @@ export function Budgets({budgets, getBudgets, addBudgetMethod, deletedBudget, ad
                 initial={{opacity: 0, scale: 0.98, y: 40}}
                 animate={{opacity: 1, scale: 1, y: 0}}
                 exit={{opacity: 0, scale: 0.98, y: 40}}
-                className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] -translate-x-[50%] text-center z-100">
+                className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] translate-x-[-50%] text-center z-100">
                 
                 <div className="flex gap-2 items-center text-lg font-medium">
                     <i className="fa-solid fa-square-check text-emerald-700"></i>
@@ -75,7 +75,7 @@ export function Budgets({budgets, getBudgets, addBudgetMethod, deletedBudget, ad
                 initial={{opacity: 0, scale: 0.98, y: 40}}
                 animate={{opacity: 1, scale: 1, y: 0}}
                 exit={{opacity: 0, scale: 0.98, y: 40}}
-                className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] -translate-x-[50%] text-center z-100">
+                className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] translate-x-[-50%] text-center z-100">
                 
                 <div className="flex gap-2 items-center text-lg font-medium">
                     <i className="fa-solid fa-square-check text-emerald-700"></i>

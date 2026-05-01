@@ -21,11 +21,11 @@ export function Navbar () {
             </div>
             
             <div className="md:flex gap-2 items-center text-lg hidden">
-                <NavLink to={`/dashboard`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-[3px] after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-[3px] after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Dashboard</NavLink>
+                <NavLink to={`/dashboard`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Dashboard</NavLink>
                 
-                <NavLink to={`/transactions`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-[3px] after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-[3px] after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Transactions</NavLink>
+                <NavLink to={`/transactions`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Transactions</NavLink>
 
-                <NavLink to={`/budgets`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-[3px] after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-[3px] after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Budgets</NavLink>
+                <NavLink to={`/budgets`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Budgets</NavLink>
             </div>
             </nav>
             
@@ -35,8 +35,8 @@ export function Navbar () {
         <div 
             onClick={() => setIsOpen(prev => !prev)}
             className="md:hidden flex flex-col gap-2 items-center justify-center cursor-pointer z-40 fixed top-8 right-6">
-                <div className={`${isOpen && "rotate-20 translate-y-1"} font-semibold duration-300 text-black bg-black h-[4px] w-[25px]`}></div>
-                <div className={`${isOpen && "-rotate-20 -translate-y-1"} font-semibold duration-300 text-black bg-black h-[4px] w-[25px]`}></div>
+                <div className={`${isOpen && "rotate-20 translate-y-1"} font-semibold duration-300 text-black bg-black h-1 w-6.25`}></div>
+                <div className={`${isOpen && "-rotate-20 -translate-y-1"} font-semibold duration-300 text-black bg-black h-1 w-6.25`}></div>
             </div>
 <AnimatePresence>
         { isOpen && (
@@ -55,11 +55,11 @@ export function Navbar () {
                 className="flex font-medium text-lg flex-col gap-4 items-center justify-center md:hidden px-6 pb-6 bg-white backdrop-blur-sm z-30 fixed right-0 top-0 h-full w-[75%] overflow-x-hidden">
                
                 
-                <NavLink to={`/dashboard`} onClick={() => setIsOpen(false)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-[3px] after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-[3px] after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Dashboard</NavLink>
+                <NavLink to={`/dashboard`} onClick={() => setIsOpen(false)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Dashboard</NavLink>
                 
-                <NavLink to={`/transactions`} onClick={() => setIsOpen(false)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-[3px] after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-[3px] after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Transactions</NavLink>
+                <NavLink to={`/transactions`} onClick={() => setIsOpen(false)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Transactions</NavLink>
 
-                <NavLink to={`/budgets`} onClick={() => setIsOpen(false)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-[3px] after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-[3px] after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Budgets</NavLink>
+                <NavLink to={`/budgets`} onClick={() => setIsOpen(false)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Budgets</NavLink>
                 </motion.div>
                 </>
             )

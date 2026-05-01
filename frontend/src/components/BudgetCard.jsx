@@ -63,10 +63,10 @@ const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) 
                 <p className="font-medium">{budget.category}</p>
                 <p className="text-sm">Limit: ${budget.limit}</p>
                 <p className="text-sm">Current spending: ${infoForThisBudget > 0 ? infoForThisBudget : "0"}</p>
-                <div className="w-full rounded-lg bg-gray-900 h-[20px]">
+                <div className="w-full rounded-lg bg-gray-900 h-5">
                     <div
                     style={{width: `${progress}%`}}
-                    className={`${progress > 100 && "bg-rose-500"} bg-emerald-700 h-[20px] max-w-full rounded-lg text-sm`}></div>
+                    className={`${progress > 100 && "bg-rose-500"} bg-emerald-700 h-5 max-w-full rounded-lg text-sm`}></div>
                 </div>
                 <p className={`${progress > 100 && "text-rose-500"} text-sm`}>{((infoForThisBudget/budget.limit) * 100).toFixed(2)}%</p>
                
@@ -106,17 +106,17 @@ const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) 
                     exit={{opacity: 0, scale: 0.98}}
                     transition={{duration: 0.2, ease: "easeInOut"}}
                     className="bg-white p-6 rounded-lg z-50 flex flex-col gap-4 items-center justify-center text-center">
-                        <i className="fa-solid fa-circle-exclamation text-xl text-rose-500 text-xl"></i>
+                        <i className="fa-solid fa-circle-exclamation  text-rose-500 text-xl"></i>
                         <p className="text-xl font-medium">Are you sure you would like to delete this budget?</p>
                         
                         <div className="flex gap-4 justify-center items-center">
                         <button 
                         
                         onClick={() => setConfirmingDelete(false)}
-                        className="cursor-pointer font-medium after:content-[''] after:block after:h-[3px] after:w-full after:bg-black after:scale-x-0 hover:after:scale-x-100 after:duration-300"
+                        className="cursor-pointer font-medium after:content-[''] after:block after:h-0.75 after:w-full after:bg-black after:scale-x-0 hover:after:scale-x-100 after:duration-300"
                         >Cancel</button>
                         <button 
-                        className="cursor-pointer font-medium text-rose-500 after:content-[''] after:block after:h-[3px] after:w-full after:bg-rose-500 after:scale-x-0 hover:after:scale-x-100 after:duration-300"
+                        className="cursor-pointer font-medium text-rose-500 after:content-[''] after:block after:h-0.75 after:w-full after:bg-rose-500 after:scale-x-0 hover:after:scale-x-100 after:duration-300"
                         onClick={() => handleDeleteClick(budget._id)}>Delete</button>
                         </div>
                     </motion.div>

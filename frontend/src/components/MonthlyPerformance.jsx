@@ -77,8 +77,8 @@ export function MonthlyPerformance ({totalIncomeVsTotalExpenseLastMonthPercent, 
                     </div>
                   </div>
 
-                  <div className="bg-gray-800 w-full h-[20px] rounded-lg">
-                    <div style={{width: `${ (totalExpensesWithinLastMonth/totalIncomeWithinLastMonth * 100) > 100 ? "100%" : (totalExpensesWithinLastMonth / totalIncomeWithinLastMonth) * 100}%`}} className="bg-rose-500 h-[20px] rounded-lg"></div>
+                  <div className="bg-gray-800 w-full h-5 rounded-lg">
+                    <div style={{width: `${ (totalExpensesWithinLastMonth/totalIncomeWithinLastMonth * 100) > 100 ? "100%" : (totalExpensesWithinLastMonth / totalIncomeWithinLastMonth) * 100}%`}} className="bg-rose-500 h-5 rounded-lg"></div>
                   </div>
                   <p className="text-rose-500">{totalExpensesWithinLastMonth === 0 ? 0 : ((totalExpensesWithinLastMonth / totalIncomeWithinLastMonth) * 100).toFixed(2)}%</p>
                 </div>

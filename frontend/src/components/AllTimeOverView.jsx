@@ -26,7 +26,7 @@ export function AllTimeOverView({totalIncome, convertFormat, totalExpenses, inco
                 </div>
 
                 <div 
-                className={`${totalIncome - totalExpenses > 0 && "bg-linear-to-br from-emerald-400/80 to-teal-600/90"} ${totalIncome - totalExpenses === 0 && "bg-linear-to-br from-slate-400/70 to-slate-600/80"} ${totalIncome - totalExpenses < 0 && "bg-gradient-to-br from-orange-400/70 to-rose-500/80"} hover:-translate-y-1 text-white duration-300 flex flex-col gap-3 w-full col-span-1 md:col-span-2 lg:col-span-1  justify-center items-center h-full shadow-md p-6 rounded-lg text-center hover:shadow-lg`}>
+                className={`${totalIncome - totalExpenses > 0 && "bg-linear-to-br from-emerald-400/80 to-teal-600/90"} ${totalIncome - totalExpenses === 0 && "bg-linear-to-br from-slate-400/70 to-slate-600/80"} ${totalIncome - totalExpenses < 0 && "bg-linear-to-br from-orange-400/70 to-rose-500/80"} hover:-translate-y-1 text-white duration-300 flex flex-col gap-3 w-full col-span-1 md:col-span-2 lg:col-span-1  justify-center items-center h-full shadow-md p-6 rounded-lg text-center hover:shadow-lg`}>
                     <i className="fa-solid fa-scale-balanced text-2xl"></i>
                     <p className="font-medium text-sm text-white">Net balance:</p>
                     <p className={`text-2xl`}>{convertFormat(totalIncome - totalExpenses)}</p>

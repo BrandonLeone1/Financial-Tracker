@@ -27,13 +27,13 @@ export function BudgetRisk ({budgetRiskInfo, showingMoreBudgetInfo, setShowingMo
                                 }
                                 <p className="text-black! font-medium text-lg">{budget.category}</p>
                                 <p className='text-sm'>Limit: {convertFormat(budget.limit)}</p>
-                                <div className="w-full h-[20px] bg-gray-800 rounded-xl">
+                                <div className="w-full h-5 bg-gray-800 rounded-xl">
                                     <motion.div
                                     initial={{width: 0}}
                                     whileInView={{width: `${budget.percentUsed <= 100 ? budget.percentUsed : 100 }%`}}
                                     viewport={{once: true, amount: 0.6}}
                                     transition={{duration: 0.3, ease: "easeIn"}} 
-                                    className={`max-w-full h-[20px] ${budget.percentUsed < 75 ? "bg-emerald-700" : "bg-yellow-500"} rounded-xl`}>
+                                    className={`max-w-full h-5 ${budget.percentUsed < 75 ? "bg-emerald-700" : "bg-yellow-500"} rounded-xl`}>
 
                                     </motion.div>
                                 </div>
@@ -59,7 +59,7 @@ export function BudgetRisk ({budgetRiskInfo, showingMoreBudgetInfo, setShowingMo
                                     animate={{opacity: 1, scale: 1, y: 0}}
                                     exit={{opacity: 0, scale: 0.98, y: 20}}
                                     transition={{duration: 0.25, ease: "easeInOut"}}
-                                    className="bg-gray-100 py-1 px-2 rounded-lg absolute bottom-3 left-[50%] -translate-x-[50%] text-sm">
+                                    className="bg-gray-100 py-1 px-2 rounded-lg absolute bottom-3 left-[50%] translate-x-[-50%] text-sm">
                                         {convertFormat(budget.amountAlreadySpent)} total
                                     </motion.div>
                                 )
@@ -86,13 +86,13 @@ export function BudgetRisk ({budgetRiskInfo, showingMoreBudgetInfo, setShowingMo
                                 <i className="fa-solid fa-fire text-rose-500 top-3 right-3 text-base! absolute hover:rotate-10 duration-300"></i>
                                 <p className="text-black! font-medium text-lg">{budget.category}</p>
                                 <p className='text-sm'>Limit: {convertFormat(budget.limit)}</p>
-                                <div className="w-full h-[20px] bg-gray-800 rounded-xl">
+                                <div className="w-full h-5 bg-gray-800 rounded-xl">
                                     <motion.div 
                                     initial={{width: 0}}
                                     whileInView={{width: `${budget.percentUsed <= 100 ? budget.percentUsed : 100 }%`}}
                                     viewport={{once: true, amount: 0.6}}
                                     transition={{duration: 0.3, ease: "easeIn"}} 
-                                    className="max-w-full bg-rose-500 h-[20px] rounded-xl">
+                                    className="max-w-full bg-rose-500 h-5 rounded-xl">
 
                                     </motion.div>
                                 </div>
@@ -115,7 +115,7 @@ export function BudgetRisk ({budgetRiskInfo, showingMoreBudgetInfo, setShowingMo
                                     animate={{opacity: 1, scale: 1, y: 0}}
                                     exit={{opacity: 0, scale: 0.98, y: 20}}
                                     transition={{duration: 0.25, ease: "easeInOut"}}
-                                    className="bg-gray-100 py-1 px-2 rounded-lg absolute bottom-3 text-sm left-[50%] -translate-x-[50%]">
+                                    className="bg-gray-100 py-1 px-2 rounded-lg absolute bottom-3 text-sm left-[50%] -ranslate-x-[-50%]">
                                         {convertFormat(budget.amountAlreadySpent)} total
                                     </motion.div>
                                 )

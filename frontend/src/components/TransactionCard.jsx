@@ -44,10 +44,10 @@ export function TransactionCard ({transaction, deleteTransactionMethod, updateTr
                     <button onClick={() => {
                         setConfirmingDelete(false);
                         setTransactionToDelete(null);
-                        }} className="cursor-pointer font-medium after:content-[''] after:block after:h-[3px] after:w-full after:bg-black after:scale-x-0 hover:after:scale-x-100 after:duration-300">
+                        }} className="cursor-pointer font-medium after:content-[''] after:block after:h-0.75 after:w-full after:bg-black after:scale-x-0 hover:after:scale-x-100 after:duration-300">
                             Cancel</button>
                     <button onClick={handleDeleteClick}
-                    className="cursor-pointer font-medium text-rose-500 after:content-[''] after:block after:h-[3px] after:w-full after:bg-rose-500 after:scale-x-0 hover:after:scale-x-100 after:duration-300"
+                    className="cursor-pointer font-medium text-rose-500 after:content-[''] after:block after:h-0.75 after:w-full after:bg-rose-500 after:scale-x-0 hover:after:scale-x-100 after:duration-300"
                     >
                         Delete
                     </button>
