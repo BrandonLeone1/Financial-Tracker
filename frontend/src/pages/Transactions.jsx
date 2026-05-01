@@ -204,6 +204,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         }
         </AnimatePresence>
 
+      { transactions.length > 1 && (
         <div className="flex gap-2 justify-center items-center mt-12">
         <button 
         className={`${showingOnlyIncome && "text-indigo-400"} font-medium mb-6 cursor-pointer underline hover:text-indigo-400 duration-300`}
@@ -212,6 +213,8 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         className={`${showingOnlyExpenses && "text-indigo-400"} font-medium mb-6 cursor-pointer underline hover:text-indigo-400 duration-300`}
         onClick={() => setShowingOnlyExpenses(prev => !prev)}>{!showingOnlyExpenses ? "Show only expenses" : "Showing only expenses"}</button>
         </div>
+      )    
+}
 
         <AnimatePresence>
         { !showingOnlyIncome && !showingOnlyExpenses ? (

@@ -11,7 +11,7 @@ export function TransactionsFeed ({recentTransactions, convertFormat}) {
                
                 className="lg:col-span-3 md:col-span-2 bg-white hover:-translate-y-1 duration-300 hover:shadow-lg flex shadow-md flex-col gap-4 w-full h-full p-6 rounded-lg text-center">
                         <i className="fa-solid fa-calendar-days text-2xl text-gray-700 opacity-80"></i>
-                        <p className="text-center text-base text-gray-700 font-medium">Last 5 added transactions:</p>
+                        <p className="text-center text-base text-gray-700 font-medium">{`${recentTransactions.length > 0 ? "Last 5 added transactions:" : "Add transactions to see the last 5 listed here"}`}</p>
                         <div className="flex flex-wrap gap-6 items-center justify-center mt-2">
                         { recentTransactions.map(((transaction,index) => (
                             <div key={transaction._id} className={`flex flex-col gap-4 shadow-md p-6 rounded-lg bg-white hover:-translate-y-1 duration-300 ${transaction.classification === "Income" ? "border-l-4 border-emerald-600" : "border-l-4 border-rose-600"}`}>

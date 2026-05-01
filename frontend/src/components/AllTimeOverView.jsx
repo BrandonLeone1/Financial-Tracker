@@ -10,7 +10,7 @@ export function AllTimeOverView({totalIncome, convertFormat, totalExpenses, inco
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <div 
-                className="text-gray-900 justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-300 flex flex-col gap-3 w-full h-full p-6 shadow-md rounded-lg text-center bg-white">
+                className="text-gray-900 justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-300 flex flex-col gap-3 w-full h-full p-6 shadow-md rounded-lg text-center bg-linear-to-br from-emerald-50 to-white">
                     <i className="fa-solid fa-money-bill-trend-up text-emerald-700 text-2xl"></i>
                     <p className="font-medium text-sm text-gray-600">Total income:</p>
                     <p className="text-2xl">{convertFormat(totalIncome)}
@@ -18,7 +18,7 @@ export function AllTimeOverView({totalIncome, convertFormat, totalExpenses, inco
                 </div>
 
                 <div 
-                className="text-gray-900 bg-gray-300/40 justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-300 flex flex-col gap-3 w-full h-full p-6 shadow-md rounded-lg text-center ">
+                className="text-gray-900 bg-linear-to-br from-rose-50 to-white justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-300 flex flex-col gap-3 w-full h-full p-6 shadow-md rounded-lg text-center ">
                     <i className="fa-solid fa-receipt text-2xl text-rose-500"></i>
                     <p className="font-medium text-sm text-gray-600">Total expenses:</p>
                     <p className="text-2xl">{convertFormat(totalExpenses)}

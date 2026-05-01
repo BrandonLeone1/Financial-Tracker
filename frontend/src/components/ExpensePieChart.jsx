@@ -55,7 +55,16 @@ const COLORS = [
             cx="50%"
             cy="50%"
             outerRadius={100}
-            label={({value}) => convertFormat(value)}
+            label={({percent, name}) => {
+                if (!percent || !name) {
+                    return (
+                        `${0}%`
+                    )
+                }
+                return (
+                    `${name}: ${(percent * 100).toFixed(2)}%`
+                )
+            }}
             >
 
             </Pie>

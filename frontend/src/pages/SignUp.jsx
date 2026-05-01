@@ -70,9 +70,9 @@ export function SignUp ({addUserMethod}) {
 
                 <button 
                 onClick={handleClick}
-                className="bg-emerald-700 py-1 rounded-lg text-white cursor-pointer hover:bg-emerald-800 active:scale-95 duration-300">Sign up</button>
+                className="bg-indigo-400 py-1 rounded-lg text-white cursor-pointer hover:bg-indigo-500 active:scale-95 duration-300">Sign up</button>
             
-                <p>Have an account? <Link to={`/login`} className="text-emerald-700 underline">Log in</Link></p>
+                <p>Have an account? <Link to={`/login`} className="text-indigo-400 underline">Log in</Link></p>
             </div>
 
         </div>

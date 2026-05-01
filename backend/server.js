@@ -8,17 +8,34 @@ import verifyToken from './verifyToken.js';
 import checkAuth from './checkAuth.js';
 import Transaction from './Transaction.js';
 import Budget from './Budget.js';
+import rateLimit from 'express-rate-limit'
 const app = express();
 
-app.use(express.json());
-app.use(cookieParser())
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 400,
+    message: 'You are sending requests too fast, Try again later',
+    standardHeaders: true
+})
 
-app.post("/api/auth/signup", async (req, res) => {
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: 'You are sending requests too fast, Try again later',
+    standardHeaders: true
+})
+
+app.use(limiter);
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.post("/api/auth/signup", authLimiter, async (req, res) => {
     const {name, email, password} = req.body;
 
     try {
         if (!name || !email || !password || typeof name !== "string" || typeof email !== "string" || typeof password !== "string" ){
-            res.status(401).json({success: false, message: "Failed to sign up. Please fill in all fields or enter proper data type."});
+            return res.status(401).json({success: false, message: "Failed to sign up. Please fill in all fields or enter proper data type."});
         };
         const userAlreadyExists = await User.findOne({email});
         if (userAlreadyExists) {
@@ -40,23 +57,28 @@ app.post("/api/auth/signup", async (req, res) => {
         }})
 
     } catch (error) {
-        res.status(401).json({success: false, message: "Failed to sign up"})
+        return res.status(401).json({success: false, message: "Failed to sign up"})
     }
 })
 
-app.post("/api/auth/login", async (req, res) => {
+app.post("/api/auth/login", authLimiter, async (req, res) => {
     const {email, password} = req.body;
 
     try {
+
+        if (!email || !password || typeof email !== "string" || typeof password !== "string") {
+            return res.status(401).json({success: false, message: "Failed to log in. Did not receive all credentials or received wrong data format"})
+        }
+
         const isUser = await User.findOne({email});
         if (!isUser) {
-            return res.status(401).json({success: false, message: "Account doesn't exist"})
+            return res.status(401).json({success: false, message: "Invalid email or password"})
         }
 
         const isPasswordCorrect = await bcrypt.compare(password, isUser.password);
 
         if (!isPasswordCorrect) {
-            return res.status(401).json({success: false, message: "Incorrect credentials"})
+            return res.status(401).json({success: false, message: "Invalid email or password"})
         }
 
         generateTokenAndSetCookie(isUser._id, res);
@@ -66,7 +88,7 @@ app.post("/api/auth/login", async (req, res) => {
         }})
 
     } catch (error) {
-        return res.status(401).json({success: false, message: "Failed to sign in"})
+        return res.status(401).json({success: false, message: "Invalid email or password"})
     }
 })
 
@@ -77,7 +99,7 @@ app.post("/api/transactions", verifyToken, async (req, res) => {
     
     try {
     
-        if (!classification || !amount || !category || !date || typeof classification !== "string" || typeof amount !== "number" || typeof category !== "string" || typeof date !== "string") {
+        if (!classification || !amount || !category || !date || typeof classification !== "string" || typeof amount !== "number" || typeof category !== "string") {
         return res.status(400).json({success: false, message: "Failed to add transaction. Please fill in all fields or send the correct data type"})
     }
 
@@ -299,7 +321,7 @@ app.get("/api/transactions/expenses-over-time", verifyToken, async (req, res) =>
     try {
         let sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
+        sevenDaysAgo.setUTCHours(0,0,0,0)
 
         const expensesOverTimeSummary = await Transaction.aggregate([
             {
@@ -327,6 +349,7 @@ app.get("/api/transactions/expenses-one-month", verifyToken, async (req, res) =>
     
     let oneMonthAgo = new Date();
     oneMonthAgo.setDate(oneMonthAgo.getDate() - 30)
+    oneMonthAgo.setUTCHours(0,0,0,0)
     
    try {
     const monthlySummary = await Transaction.aggregate([
@@ -410,9 +433,10 @@ app.get("/api/transactions/comparison", verifyToken, async (req, res) => {
     try {
         let thisWeekExpenses = new Date();
         thisWeekExpenses.setDate(thisWeekExpenses.getDate() - 7);
+        thisWeekExpenses.setUTCHours(0,0,0,0)
         let previousWeekExpenses = new Date();
         previousWeekExpenses.setDate(previousWeekExpenses.getDate() - 14);
-
+        previousWeekExpenses.setUTCHours(0,0,0,0)
         const thisWeekExpensesSummary = await Transaction.aggregate([
             {
                 $match: {userID: req.userID, classification: "Expense", date: {$gte: thisWeekExpenses}}
@@ -422,7 +446,7 @@ app.get("/api/transactions/comparison", verifyToken, async (req, res) => {
         ])
 
         if (thisWeekExpensesSummary.length === 0) {
-            res.status(400).json({success: false, message: "Failed to get expense summary for this current week. Search must be wrong"})
+            return res.status(400).json({success: false, message: "Failed to get expense summary for this current week. Search must be wrong"})
         }
 
         const previousWeekExpensesSummary = await Transaction.aggregate([
@@ -434,7 +458,7 @@ app.get("/api/transactions/comparison", verifyToken, async (req, res) => {
         ])
 
         if (previousWeekExpensesSummary.length === 0) {
-            res.status(400).json({success: false, message: "Failed to get expense summary for previous week. Search must be wrong"})
+            return res.status(400).json({success: false, message: "Failed to get expense summary for previous week. Search must be wrong"})
         }
 
         let comparisonArray = thisWeekExpensesSummary.map(expense => {
@@ -456,12 +480,12 @@ app.get("/api/transactions/comparison", verifyToken, async (req, res) => {
         })
 
         if (comparisonArray.length === 0 || !comparisonArray) {
-            res.status(400).json({success: false, message: "Failed to get expense summary for previous week. Search must be wrong"})
+            return res.status(400).json({success: false, message: "Failed to get expense summary for previous week. Search must be wrong"})
         }
 
         res.status(200).json({success:true, message: "Got data and successfully compared", data: comparisonArray})
     } catch (error) {
-        res.status(400).json({success: false, message: "Failed to get expense summary for this current week"})
+        return res.status(400).json({success: false, message: "Failed to get expense summary for this current week"})
     }
 })
 
@@ -469,7 +493,8 @@ app.get("/api/transactions/income-last-month", verifyToken, async (req, res) => 
     
     let withinLastMonth = new Date();
     withinLastMonth.setDate(withinLastMonth.getDate() - 30)
-    
+    withinLastMonth.setUTCHours(0,0,0,0);
+
     try {
         const incomeWithinLastMonth = await Transaction.aggregate([
             {
@@ -489,7 +514,51 @@ app.get("/api/transactions/income-last-month", verifyToken, async (req, res) => 
     }
 })
 
+app.get("/api/transactions/income-and-expenses-previous-month", verifyToken, async (req, res) => {
+    
+    let thisMonth = new Date();
+    thisMonth.setDate(thisMonth.getDate() - 30)
+    thisMonth.setUTCHours(0,0,0,0)
+
+    let previousMonth = new Date();
+    previousMonth.setDate(previousMonth.getDate() - 60)
+    previousMonth.setUTCHours(0,0,0,0)
+    
+    try {
+        const previousMonthIncomeSummary = await Transaction.aggregate([
+            {
+                $match: {userID: req.userID, classification: "Income", date: {$gte: previousMonth, $lt: thisMonth}}
+            },
+            {
+                $project: {amount: 1}
+            }
+        ])
+
+        const previousMonthExpensesSummary = await Transaction.aggregate([
+            {
+                $match: {userID: req.userID, classification: "Expense", date: {$gte: previousMonth, $lt: thisMonth}}
+            },
+            {
+                $project: {amount: 1}
+            }
+        ])
+
+        const previousMonthIncomeTotal = previousMonthIncomeSummary.map(income => {
+            return income.amount
+        }).reduce((a,b) => a + b);
+
+        const previousMonthExpensesTotal = previousMonthExpensesSummary.map(expense => {
+            return expense.amount
+        }).reduce((a,b) => a + b);
+
+        res.status(200).json({success: true, message: "got data", incomeData: previousMonthIncomeTotal, expenseData: previousMonthExpensesTotal})
+    } catch (error) {
+        return res.status(400).json({success: false, message: "Failed"})
+    }
+})
+
 app.listen(5000, () => {
     connectDB();
     console.log("Started server on port 5000")
+    
 });

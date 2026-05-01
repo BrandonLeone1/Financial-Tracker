@@ -1,10 +1,11 @@
 import {motion, AnimatePresence} from 'framer-motion'
+import { Link } from 'react-router'
 
 export function BudgetRisk ({budgetRiskInfo, showingMoreBudgetInfo, setShowingMoreBudgetInfo, convertFormat}) {
     return (
         <>
         <p className="font-medium text-3xl  w-fit mt-6 mb-6">Budget risk:</p>
-                
+            {    budgetRiskInfo.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div className="mx-auto w-full">
@@ -131,6 +132,10 @@ export function BudgetRisk ({budgetRiskInfo, showingMoreBudgetInfo, setShowingMo
                     </div>
 
                 </div>
+            ) : (
+                <p>Add budgets on <Link to={`/budgets`} className='underline text-indigo-400 font-medium hover:text-indigo-500 duration-300'>/budgets</Link> to track your all-time expenses and compare to what you would like to spend for each category.</p>
+            )
+}
         </>
     )
 }

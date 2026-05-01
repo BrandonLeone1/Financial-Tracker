@@ -1,22 +1,17 @@
 import { useState } from "react"
 import {motion, AnimatePresence} from 'framer-motion'
 
-export function BudgetCard ({budget, index, deleteBudget, editBudget, budgetInfo, getBudgetInfo}) {
-
-let infoForThisBudget = null;
+export function BudgetCard ({budget, index, budgetMap, deleteBudget, editBudget}) {
 
 
-    for (let i = 0; i < budgetInfo.length; i++) {
-    const current = budgetInfo[i];
-    if (current._id === budget.category) {
-        infoForThisBudget = current.total
-    }
-}    
-console.log(infoForThisBudget)
+
+const infoForThisBudget = budgetMap[budget.category] || 0;
+
+
     async function handleDeleteClick (id) {
         await deleteBudget(id)
     }
-const progress = Math.floor((infoForThisBudget/budget.limit) * 100)
+const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) * 100) : 0;
     const [confirmingDelete, setConfirmingDelete] = useState(false);
 
     const [updatedBudget, setUpdatedBudget] = useState({

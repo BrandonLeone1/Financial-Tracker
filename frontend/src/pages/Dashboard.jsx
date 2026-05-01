@@ -7,7 +7,7 @@ import { WeeklyActivity } from "../components/WeeklyActivity";
 import { TransactionsFeed } from "../components/TransactionsFeed";
 import { BudgetRisk } from "../components/BudgetRisk";
 
-export function Dashboard ({currentUser, convertFormat, getExpenseComparison, incomeWithinLastMonth, getIncomeWithinLastMonth, expenseComparisonData, expensesLastWeek, loadingPieCharts, loadingLineCharts, expensesLastMonth, monthlyExpenseData, getExpensesOverTime, transactions, getTransactions, budgets, getIncomeInfo, getExpenseInfo, incomeInfo, expenseInfo, getBudgetRisks, budgetRiskInfo}) {
+export function Dashboard ({currentUser, convertFormat, previousMonthIncomeTotal, previousMonthExpenseTotal, getExpenseComparison, getPreviousMonthIncomeAndExpenses, incomeWithinLastMonth, getIncomeWithinLastMonth, expenseComparisonData, expensesLastWeek, loadingPieCharts, loadingLineCharts, expensesLastMonth, monthlyExpenseData, getExpensesOverTime, transactions, getTransactions, getIncomeInfo, getExpenseInfo, incomeInfo, expenseInfo, getBudgetRisks, budgetRiskInfo}) {
     
     useEffect(() => {
         getTransactions();
@@ -18,6 +18,7 @@ export function Dashboard ({currentUser, convertFormat, getExpenseComparison, in
         getBudgetRisks();
         getExpenseComparison();
         getIncomeWithinLastMonth();
+        getPreviousMonthIncomeAndExpenses();
     }, []
 )
 
@@ -61,7 +62,7 @@ export function Dashboard ({currentUser, convertFormat, getExpenseComparison, in
    
     const dailySpendingLastWeek = (AllExpensesLastWeek.reduce((a,b) => a + b, 0) / 7).toFixed(2);
     
-    const dailySpendingChangePrevWeekVsThisWeek = dailySpendingLastWeek === 0 ? 0 : ((dailySpendingThisWeek - dailySpendingLastWeek) / dailySpendingLastWeek) * 100
+    const dailySpendingChangePrevWeekVsThisWeek = dailySpendingLastWeek === 0 || dailySpendingThisWeek === 0 ? 0 : ((dailySpendingThisWeek - dailySpendingLastWeek) / dailySpendingLastWeek) * 100
     
     let totalIncomeWithinLastMonth = incomeWithinLastMonth.map(income => {
         return income.total
@@ -72,7 +73,7 @@ export function Dashboard ({currentUser, convertFormat, getExpenseComparison, in
     }).reduce((a,b) => a + b, 0);
   
     const totalIncomeVsTotalExpenseLastMonthPercent = totalExpensesWithinLastMonth === 0 ? 0 : (((totalIncomeWithinLastMonth - totalExpensesWithinLastMonth) / totalIncomeWithinLastMonth) * 100).toFixed(2)
-   
+    const totalIncomeVsTotalExpensePreviousMonthPercent = previousMonthIncomeTotal === 0 ? 0 : (((previousMonthIncomeTotal - previousMonthExpenseTotal) / previousMonthIncomeTotal) * 100).toFixed(2)
     return (
         <>
         <Navbar />
@@ -84,7 +85,7 @@ export function Dashboard ({currentUser, convertFormat, getExpenseComparison, in
 
             <AllTimeOverView convertFormat={convertFormat} totalIncome={totalIncome} totalExpenses={totalExpenses} incomeInfo={incomeInfo} expenseInfo={expenseInfo} loadingPieCharts={loadingPieCharts}/>
 
-            <MonthlyPerformance convertFormat={convertFormat} totalIncomeVsTotalExpenseLastMonthPercent={totalIncomeVsTotalExpenseLastMonthPercent} totalIncomeWithinLastMonth={totalIncomeWithinLastMonth} totalExpensesWithinLastMonth={totalExpensesWithinLastMonth}/>
+            <MonthlyPerformance convertFormat={convertFormat} totalIncomeVsTotalExpensePreviousMonthPercent={totalIncomeVsTotalExpensePreviousMonthPercent} previousMonthIncomeTotal={previousMonthIncomeTotal} previousMonthExpenseTotal={previousMonthExpenseTotal} totalIncomeVsTotalExpenseLastMonthPercent={totalIncomeVsTotalExpenseLastMonthPercent} totalIncomeWithinLastMonth={totalIncomeWithinLastMonth} totalExpensesWithinLastMonth={totalExpensesWithinLastMonth}/>
             
             <WeeklyActivity expenseComparisonData={expenseComparisonData} convertFormat={convertFormat} dailySpendingThisWeek={dailySpendingThisWeek} dailySpendingChangePrevWeekVsThisWeek={dailySpendingChangePrevWeekVsThisWeek} top={top} expensesLastWeek={expensesLastWeek} loadingLineCharts={loadingLineCharts} expensesLastMonth={expensesLastMonth}/>
 

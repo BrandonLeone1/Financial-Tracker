@@ -29,11 +29,9 @@ function App() {
   const [loadingPieCharts, setLoadingPieCharts] = useState(false);
   const [loadingLineCharts, setLoadingLineCharts] = useState(false);
   const [expenseComparisonData, setExpenseComparisonData] = useState([]);
-  const [incomeWithinLastMonth, setIncomeWithinLastMonth] = useState([])
-
-
-  
-
+  const [incomeWithinLastMonth, setIncomeWithinLastMonth] = useState([]);
+  const [previousMonthIncomeTotal, setPreviousMonthIncomeTotal] = useState(0);
+  const [previousMonthExpenseTotal, setPreviousMonthExpenseTotal] = useState(0);
 
   async function addUserMethod (newUser) {
     const response = await fetch(`/api/auth/signup`, {
@@ -61,14 +59,24 @@ function App() {
   async function checkAuthAndGetUser () {
     
     setIsLoading(true);
-    
-    const response = await fetch(`/api/auth/check`);
+    try {
+     const response = await fetch(`/api/auth/check`);
     const data = await response.json();
     if (data.success) {
       setCurrentUser(data.user)
+      
+    } else {
+      setCurrentUser(null)
     }
-
-    setIsLoading(false);
+   
+    } catch (error) {
+      setCurrentUser(null)
+    } finally {
+      setIsLoading(false);
+    }
+    
+    
+    
   }
 
   useEffect(() => {
@@ -85,7 +93,6 @@ async function addTransactionMethod (newTransaction) {
   const data = await response.json();
 
   if (data.success) {
-    
 
     setTransactions(prev => [...prev, data.data]);
 
@@ -277,7 +284,6 @@ async function getBudgetRisks() {
 async function getExpenseComparison() {
   const response = await fetch(`/api/transactions/comparison`);
   const data = await response.json();
-  console.log(data.success, data.message)
   if (data.success) {
     setExpenseComparisonData(data.data)
   }
@@ -286,13 +292,19 @@ async function getExpenseComparison() {
 async function getIncomeWithinLastMonth () {
   const response = await fetch(`/api/transactions/income-last-month`);
   const data = await response.json();
-  console.log(data.success, data.message);
   if (data.success) {
     setIncomeWithinLastMonth(data.data)
   }
 }
 
-console.log(incomeWithinLastMonth, expensesLastMonth, "income and expenses within last month");
+async function getPreviousMonthIncomeAndExpenses() {
+  const response = await fetch(`/api/transactions/income-and-expenses-previous-month`);
+  const data = await response.json();
+  if (data.success) {
+    setPreviousMonthIncomeTotal(data.incomeData);
+    setPreviousMonthExpenseTotal(data.expenseData);
+  }
+}
 
 function convertFormat (amount) {
   const formatter = new Intl.NumberFormat('en-US', {
@@ -303,9 +315,6 @@ function convertFormat (amount) {
   return formatter.format(amount)
 }
 
-if (isLoading) {
-  return <Loading />
-}
   return (
     <>
     <Routes>
@@ -331,7 +340,7 @@ if (isLoading) {
       path='/dashboard'
       element={
       <ProtectedRoute currentUser={currentUser} isLoading={isLoading}>
-      <Dashboard loadingLineCharts={loadingLineCharts} convertFormat={convertFormat} incomeWithinLastMonth={incomeWithinLastMonth} getIncomeWithinLastMonth={getIncomeWithinLastMonth} getExpenseComparison={getExpenseComparison} expenseComparisonData={expenseComparisonData} getBudgetRisks={getBudgetRisks} loadingPieCharts={loadingPieCharts} budgetRiskInfo={budgetRiskInfo} expensesLastWeek={expensesLastWeek} expensesLastMonth={expensesLastMonth} getExpensesOverTime={getExpensesOverTime} expenseInfo={expenseInfo} currentUser={currentUser} transactions={transactions} getTransactions={getTransactions} budgets={budgets} getExpenseInfo={getExpenseInfo} getIncomeInfo={getIncomeInfo} incomeInfo={incomeInfo} monthlyExpenseData={monthlyExpenseData}/>
+      <Dashboard loadingLineCharts={loadingLineCharts} previousMonthIncomeTotal={previousMonthIncomeTotal} previousMonthExpenseTotal={previousMonthExpenseTotal} getPreviousMonthIncomeAndExpenses={getPreviousMonthIncomeAndExpenses} convertFormat={convertFormat} incomeWithinLastMonth={incomeWithinLastMonth} getIncomeWithinLastMonth={getIncomeWithinLastMonth} getExpenseComparison={getExpenseComparison} expenseComparisonData={expenseComparisonData} getBudgetRisks={getBudgetRisks} loadingPieCharts={loadingPieCharts} budgetRiskInfo={budgetRiskInfo} expensesLastWeek={expensesLastWeek} expensesLastMonth={expensesLastMonth} getExpensesOverTime={getExpensesOverTime} expenseInfo={expenseInfo} currentUser={currentUser} transactions={transactions} getTransactions={getTransactions} budgets={budgets} getExpenseInfo={getExpenseInfo} getIncomeInfo={getIncomeInfo} incomeInfo={incomeInfo} monthlyExpenseData={monthlyExpenseData}/>
       </ProtectedRoute>
     }
       />
