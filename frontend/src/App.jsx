@@ -8,7 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicRoute } from './components/PublicRoute';
 import { Transactions } from './pages/Transactions';
 import { Budgets } from './pages/Budgets';
-import { Loading } from './components/Loading';
+import dotenv from 'dotenv'
 
 function App() {
 
@@ -32,10 +32,12 @@ function App() {
   const [incomeWithinLastMonth, setIncomeWithinLastMonth] = useState([]);
   const [previousMonthIncomeTotal, setPreviousMonthIncomeTotal] = useState(0);
   const [previousMonthExpenseTotal, setPreviousMonthExpenseTotal] = useState(0);
+  dotenv.config()
 
   async function addUserMethod (newUser) {
-    const response = await fetch(`/api/auth/signup`, {
+    const response = await fetch(`${process.env.API_URL}/api/auth/signup`, {
       method: "POST",
+      withCredentials: true,
       headers:{"Content-Type": "application/json"},
       body: JSON.stringify(newUser)
     })
@@ -44,8 +46,9 @@ function App() {
   }
 
   async function logInUserMethod (existingUser) {
-    const response = await fetch(`/api/auth/login`, {
+    const response = await fetch(`${process.env.API_URL}/api/auth/login`, {
       method: "POST",
+      withCredentials: true,
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(existingUser)
     })
@@ -60,7 +63,9 @@ function App() {
     
     setIsLoading(true);
     try {
-     const response = await fetch(`/api/auth/check`);
+     const response = await fetch(`${process.env.API_URL}/api/auth/check`, {
+      withCredentials: true
+     });
     const data = await response.json();
     if (data.success) {
       setCurrentUser(data.user)
@@ -85,8 +90,9 @@ function App() {
 )
 
 async function addTransactionMethod (newTransaction) {
-  const response = await fetch(`/api/transactions`, {
+  const response = await fetch(`${process.env.API_URL}/api/transactions`, {
     method: "POST",
+    withCredentials: true,
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(newTransaction)
   })
@@ -104,7 +110,9 @@ async function addTransactionMethod (newTransaction) {
 }
 
 async function getTransactions() {
-  const response = await fetch(`/api/transactions`);
+  const response = await fetch(`${process.env.API_URL}/api/transactions`, {
+    withCredentials: true
+  });
   const data = await response.json();
 
   if (data.success) {
@@ -113,8 +121,9 @@ async function getTransactions() {
 }
 
 async function deleteTransactionMethod (id) {
-  const response = await fetch(`/api/transactions/${id}`, {
+  const response = await fetch(`${process.env.API_URL}/api/transactions/${id}`, {
     method: "DELETE",
+    withCredentials: true,
     headers: {"Content-Type": "application/json"}
   })
   const data = await response.json();
@@ -131,8 +140,9 @@ async function deleteTransactionMethod (id) {
 }
 
 async function updateTransactionMethod (updatedTransaction) {
-  const response = await fetch(`/api/transactions/${updatedTransaction._id}`, {
+  const response = await fetch(`${process.env.API_URL}/api/transactions/${updatedTransaction._id}`, {
     method: "PUT",
+    withCredentials: true,
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(updatedTransaction)
   });
@@ -150,8 +160,9 @@ async function updateTransactionMethod (updatedTransaction) {
 }
 
 async function addBudgetMethod (newBudget) {
-  const response = await fetch(`/api/budgets`, {
+  const response = await fetch(`${process.env.API_URL}/api/budgets`, {
     method: "POST",
+    withCredentials: true,
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(newBudget)
   })
@@ -169,7 +180,9 @@ async function addBudgetMethod (newBudget) {
 }
 
 async function getBudgets () {
-  const response = await fetch(`/api/budgets`);
+  const response = await fetch(`${process.env.API_URL}/api/budgets`, {
+    withCredentials: true
+  });
   const data = await response.json();
 
   if (data.success) {
@@ -178,8 +191,9 @@ async function getBudgets () {
 }
 
 async function deleteBudget(id) {
-  const response = await fetch(`/api/budgets/${id}`, {
+  const response = await fetch(`${process.env.API_URL}/api/budgets/${id}`, {
     method: "DELETE",
+    withCredentials: true,
     headers: {"Content-Type": "application/json"}
   });
   const data = await response.json();
@@ -195,7 +209,9 @@ async function deleteBudget(id) {
 }
 
 async function getBudgetInfo () {
-  const response = await fetch(`/api/budgets/get-info`);
+  const response = await fetch(`${process.env.API_URL}/api/budgets/get-info`, {
+    withCredentials: true
+  });
   const data = await response.json();
 
   if (data.success) {
@@ -214,8 +230,9 @@ useEffect(() => {
 )
 
 async function editBudget (id, updatedBudget) {
-  const response = await fetch(`/api/budgets/${id}`, {
+  const response = await fetch(`${process.env.API_URL}/api/budgets/${id}`, {
     method: "PUT",
+    withCredentials: true,
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(updatedBudget)
   });
@@ -234,7 +251,9 @@ async function editBudget (id, updatedBudget) {
 
 async function getIncomeInfo () {
   setLoadingPieCharts(true)
-  const response = await fetch(`/api/transactions/get-income-info`);
+  const response = await fetch(`${process.env.API_URL}/api/transactions/get-income-info`, {
+    withCredentials: true,
+  });
   const data = await response.json();
   if (data.success) {
     setIncomeInfo(data.data)
@@ -244,7 +263,9 @@ async function getIncomeInfo () {
 
 async function getExpenseInfo () {
   setLoadingPieCharts(true)
-  const response = await fetch(`/api/transactions/get-expense-info`)
+  const response = await fetch(`${process.env.API_URL}/api/transactions/get-expense-info`, {
+    withCredentials: true
+  })
   const data = await response.json();
 
   if (data.success) {
@@ -255,7 +276,9 @@ async function getExpenseInfo () {
 
 async function getExpensesOverTime () {
   setLoadingLineCharts(true)
-  const response = await fetch (`/api/transactions/expenses-over-time`);
+  const response = await fetch (`${process.env.API_URL}/api/transactions/expenses-over-time`, {
+    withCredentials: true
+  });
   const data = await response.json();
   if (data.success) {
     setExpensesLastWeek(data.data);
@@ -265,7 +288,9 @@ async function getExpensesOverTime () {
 
 async function monthlyExpenseData () {
   setLoadingLineCharts(true)
-  const response = await fetch (`/api/transactions/expenses-one-month`);
+  const response = await fetch (`${process.env.API_URL}/api/transactions/expenses-one-month`, {
+    withCredentials: true
+  });
   const data = await response.json();
   if (data.success) {
     setExpensesLastMonth(data.data)
@@ -274,7 +299,9 @@ async function monthlyExpenseData () {
 }
 
 async function getBudgetRisks() {
-  const response = await fetch(`/api/budgets/remaining-info`);
+  const response = await fetch(`${process.env.API_URL}/api/budgets/remaining-info`, {
+    withCredentials: true
+  });
   const data = await response.json();
   if(data.success) {
     setBudgetRiskInfo(data.data)
@@ -282,7 +309,9 @@ async function getBudgetRisks() {
 }
 
 async function getExpenseComparison() {
-  const response = await fetch(`/api/transactions/comparison`);
+  const response = await fetch(`${process.env.API_URL}/api/transactions/comparison`, {
+    withCredentials: true
+  });
   const data = await response.json();
   if (data.success) {
     setExpenseComparisonData(data.data)
@@ -290,7 +319,9 @@ async function getExpenseComparison() {
 }
 
 async function getIncomeWithinLastMonth () {
-  const response = await fetch(`/api/transactions/income-last-month`);
+  const response = await fetch(`${process.env.API_URL}/api/transactions/income-last-month`, {
+    withCredentials: true
+  });
   const data = await response.json();
   if (data.success) {
     setIncomeWithinLastMonth(data.data)
@@ -298,7 +329,9 @@ async function getIncomeWithinLastMonth () {
 }
 
 async function getPreviousMonthIncomeAndExpenses() {
-  const response = await fetch(`/api/transactions/income-and-expenses-previous-month`);
+  const response = await fetch(`${process.env.API_URL}/api/transactions/income-and-expenses-previous-month`, {
+    withCredentials: true
+  });
   const data = await response.json();
   if (data.success) {
     setPreviousMonthIncomeTotal(data.incomeData);
