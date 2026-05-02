@@ -5,7 +5,7 @@ export function ProtectedRoute ({currentUser, children, isLoading}) {
     if (isLoading) {
         return (
             <div className="h-screen flex items-center justify-center">
-                <p>Loading....</p>
+                <p>Waking up the server… this may take ~10 seconds</p>
             </div>
         )
     }
