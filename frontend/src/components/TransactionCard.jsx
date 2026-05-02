@@ -61,11 +61,7 @@ export function TransactionCard ({transaction, deleteTransactionMethod, updateTr
         </AnimatePresence>
 
 
-            <motion.div 
-            initial={{opacity: 0, scale: 0.98, y: 40}}
-            whileInView={{opacity: 1, scale: 1, y: 0}}
-            viewport={{once: true, amount: 0.25}}
-            transition={{duration: 0.25, ease: "easeIn"}}
+            <div
             className="flex text-center flex-col bg-white gap-2 mx-auto shadow-md p-6 rounded-lg border border-white/0 hover:border-indigo-400 hover:shadow-lg duration-300 hover:-translate-y-1 w-full h-fit">
                
                
@@ -133,7 +129,7 @@ export function TransactionCard ({transaction, deleteTransactionMethod, updateTr
                 </>
             )
             }
-            </motion.div>
+            </div>
         </>
     )
 }

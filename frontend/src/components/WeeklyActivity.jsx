@@ -15,7 +15,11 @@ export function WeeklyActivity ({expenseComparisonData, convertFormat, dailySpen
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <div className="lg:col-span-2 h-full w-full bg-white rounded-xl shadow-md hover:-translate-y-1 duration-200 hover:shadow-lg">
+               
+               { expenseComparisonData.length > 0 && (
                 <p className="text-center text-sm text-gray-800 mt-2 font-medium">This week's vs previous' expenses</p>
+               )    
+            }
                 <ExpenseWeeklyComparisonBarChart expenseComparisonData={expenseComparisonData} convertFormat={convertFormat}/>
             </div>
             
@@ -75,7 +79,7 @@ export function WeeklyActivity ({expenseComparisonData, convertFormat, dailySpen
                 </div>
                 </div>
                 
-                { expensesLastMonth.length > 0 && expensesLastMonth > 0 ? (
+                { expensesLastMonth.length > 0 && expensesLastWeek.length > 0 ? (
                 <>
                 <p className="font-medium text-sm w-fit px-2 bg-slate-200 py-1 rounded-lg">What your spending looks like on a day-to-day basis:</p>
                

@@ -41,8 +41,6 @@ const COLORS = [
     )
    }
 
-   
-   
     return (
         <>
 
@@ -54,7 +52,10 @@ const COLORS = [
             nameKey={"_id"}
             cx="50%"
             cy="50%"
-            outerRadius={100}
+            labelLine={false}
+            outerRadius={window.innerWidth < 768 ? 80 : 100}
+            innerRadius={40}
+            
             label={({percent, name}) => {
                 if (!percent || !name) {
                     return (
@@ -62,7 +63,7 @@ const COLORS = [
                     )
                 }
                 return (
-                    `${name}: ${(percent * 100).toFixed(2)}%`
+                    window.innerWidth < 768 ? `${(percent * 100).toFixed(2)}%` : `${name}: ${(percent * 100).toFixed(2)}%`
                 )
             }}
             >

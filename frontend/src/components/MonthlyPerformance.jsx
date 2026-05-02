@@ -18,8 +18,6 @@ export function MonthlyPerformance ({totalIncomeVsTotalExpenseLastMonthPercent, 
                     <p className={`text-3xl ${totalIncomeVsTotalExpenseLastMonthPercent > 0 ? "text-emerald-700" : "text-rose-500"}`}>{Math.abs(totalIncomeVsTotalExpenseLastMonthPercent)}%</p>
                     <p className="text-xs text-gray-500">{totalIncomeVsTotalExpenseLastMonthPercent > 0 ? "of income saved" : "overspent vs income"}
   </p>
-  
-  
   { totalIncomeVsTotalExpensePreviousMonthPercent < 0 ? (
   <>
   <div className="flex gap-2">

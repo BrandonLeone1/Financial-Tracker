@@ -9,7 +9,6 @@ import { PublicRoute } from './components/PublicRoute';
 import { Transactions } from './pages/Transactions';
 import { Budgets } from './pages/Budgets';
 
-
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
@@ -90,8 +89,6 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-    
-    
     
   }
 

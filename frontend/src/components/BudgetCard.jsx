@@ -1,9 +1,7 @@
 import { useState } from "react"
 import {motion, AnimatePresence} from 'framer-motion'
 
-export function BudgetCard ({budget, index, budgetMap, deleteBudget, editBudget}) {
-
-
+export function BudgetCard ({budget, budgetMap, deleteBudget, editBudget}) {
 
 const infoForThisBudget = budgetMap[budget.category] || 0;
 
@@ -11,7 +9,8 @@ const infoForThisBudget = budgetMap[budget.category] || 0;
     async function handleDeleteClick (id) {
         await deleteBudget(id)
     }
-const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) * 100) : 0;
+    const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) * 100) : 0;
+    
     const [confirmingDelete, setConfirmingDelete] = useState(false);
 
     const [updatedBudget, setUpdatedBudget] = useState({
@@ -28,16 +27,11 @@ const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) 
         setEditingBudget(false)
     }
 
-
-
     return (
         <>
-            <motion.div 
+            <div 
             
-                        initial={{opacity: 0, scale: 0.98, y: 40}}
-                        whileInView={{opacity: 1, scale: 1, y: 0}}
-                        viewport={{once: true, amount: 0.25}}
-                        transition={{duration: 0.25 + (index * 0.035)}}
+                  
             
             className="mx-auto flex flex-col gap-2 bg-white p-6 rounded-xl shadow-md hover:-translate-y-1 duration-300 w-full text-center">
 
@@ -89,7 +83,7 @@ const progress = budget.limit > 0 ? Math.floor((infoForThisBudget/budget.limit) 
                 </div>
                )   
             }
-                </motion.div>
+                </div>
             
             <AnimatePresence>
             { confirmingDelete && (

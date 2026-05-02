@@ -22,7 +22,7 @@ export function ExpenseWeeklyComparisonBarChart ({expenseComparisonData, convert
 
     if (formatted.length === 0) {
         return (
-            <div className="h-full flex items-center justify-center">
+            <div className="h-full flex items-center justify-center bg-white p-6 rounded-lg shadow-md">
                 <p>No info yet. Head over to <Link to={`/transactions`} className='underline text-indigo-400 font-medium hover:text-indigo-500 duration-300'>/transactions to unlock insights</Link></p>
             </div>
         )

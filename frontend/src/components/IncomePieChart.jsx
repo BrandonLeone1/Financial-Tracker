@@ -47,18 +47,21 @@ if (loadingPieCharts) {
         <ResponsiveContainer width={"100%"} height={350}>
         <PieChart>
             <Pie
+            
             data={coloredData}
             dataKey={"total"}
             nameKey={"_id"}
             cx="50%"
             cy="50%"
-            outerRadius={100}
+            outerRadius={window.innerWidth < 768 ? 80 : 100}
+            labelLine={false}
+            innerRadius={40}
             label={({percent, name}) => {
                 if (!percent || !name) {
                     return `${0}%`
                 }
                 return (
-                    `${name}: ${(percent * 100).toFixed(2)}%`
+                    window.innerWidth < 768 ? `${(percent * 100).toFixed(2)}%` : `${name}: ${(percent * 100).toFixed(2)}%`
                 )
             }}
             >

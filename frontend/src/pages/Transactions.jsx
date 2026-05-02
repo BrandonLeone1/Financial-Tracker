@@ -48,7 +48,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
             animate={{opacity: 1, scale: 1, y: 0}}
             exit={{opacity: 0, scale: 0.98, y: 40}}
             transition={{duration: 0.25, ease: "easeInOut"}}
-            className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] -translate-x-[50%] text-center z-100">
+            className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] translate-x-[-50%] text-center z-100">
                 
                 <div className="flex gap-2 items-center text-lg font-medium">
                     <i className="fa-solid fa-square-check text-emerald-700"></i>
@@ -68,7 +68,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
             animate={{opacity: 1, scale: 1, y: 0}}
             exit={{opacity: 0, scale: 0.98, y: 40}}
             transition={{duration: 0.25, ease: "easeInOut"}}
-            className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] -translate-x-[50%] text-center z-100">
+            className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] translate-x-[-50%] text-center z-100">
                 
                 <div className="flex gap-2 items-center text-lg font-medium">
                     <i className="fa-solid fa-square-check text-emerald-700"></i>
@@ -204,7 +204,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         }
         </AnimatePresence>
 
-      { transactions.length > 1 && (
+      { transactions.length > 0 && (
         <div className="flex gap-2 justify-center items-center mt-12">
         <button 
         className={`${showingOnlyIncome && "text-indigo-400"} font-medium mb-6 cursor-pointer underline hover:text-indigo-400 duration-300`}
@@ -219,11 +219,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         <AnimatePresence>
         { !showingOnlyIncome && !showingOnlyExpenses ? (
         <motion.div 
-        layout
-        initial={{opacity: 0, scale: 1}}
-        animate={{opacity: 1, scale: 1}}
-        exit={{opacity: 0, scale: 1}}
-        transition={{duration: 0.3, ease: "easeInOut"}}
+       
         className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
         { transactions.map((transaction => (
                 <TransactionCard key={transaction._id} updateTransactionMethod={updateTransactionMethod} transaction={transaction} deleteTransactionMethod={deleteTransactionMethod} />
@@ -240,11 +236,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         <AnimatePresence>
         { showingOnlyExpenses && (
             <motion.div 
-            layout
-            initial={{opacity: 0, scale: 1}}
-            animate={{opacity: 1, scale: 1}}
-            exit={{opacity: 0, scale: 1}}
-            transition={{duration: 0.3, ease: "easeInOut"}}
+         
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 { transactions.filter(transaction => transaction.classification === "Expense")
                   .map(transaction => (
@@ -260,11 +252,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         <AnimatePresence>
         { showingOnlyIncome && (
         <motion.div 
-        layout
-        initial={{opacity: 0, scale: 1}}
-        animate={{opacity: 1, scale: 1}}
-        exit={{opacity: 0, scale: 1}}
-        transition={{duration: 0.3, ease: "easeInOut"}}
+       
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
             transactions.filter(transaction => transaction.classification === "Income")

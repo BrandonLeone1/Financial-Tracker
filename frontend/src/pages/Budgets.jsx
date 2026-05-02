@@ -207,7 +207,7 @@ export function Budgets({budgets, getBudgets, addBudgetMethod, deletedBudget, ad
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl p-6 mx-auto mt-6">
                 { budgets.map(((budget,index) => (
-                    <BudgetCard key={budget._id} budgetMap={budgetMap} index={index} budget={budget} deleteBudget={deleteBudget} editBudget={editBudget} budgetInfo={budgetInfo}/>
+                    <BudgetCard key={budget._id} budgetMap={budgetMap} budget={budget} deleteBudget={deleteBudget} editBudget={editBudget} budgetInfo={budgetInfo}/>
                 )))
 
                 }
