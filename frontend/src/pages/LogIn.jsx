@@ -58,6 +58,7 @@ export function LogIn ({logInUserMethod}) {
 
                 <button 
                 onClick={handleClick}
+                type="submit"
                 className="bg-indigo-400 py-1 rounded-lg text-white cursor-pointer hover:bg-indigo-500 active:scale-95 duration-300">Log in</button>
             
                 <p>Don't an account? <Link to={`/`} className="text-indigo-400 underline">Sign up</Link></p>

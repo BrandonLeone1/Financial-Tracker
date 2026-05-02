@@ -69,6 +69,7 @@ export function SignUp ({addUserMethod}) {
                 </label>
 
                 <button 
+                type="submit"
                 onClick={handleClick}
                 className="bg-indigo-400 py-1 rounded-lg text-white cursor-pointer hover:bg-indigo-500 active:scale-95 duration-300">Sign up</button>
             
