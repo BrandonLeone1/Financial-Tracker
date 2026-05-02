@@ -10,6 +10,7 @@ import Transaction from './Transaction.js';
 import Budget from './Budget.js';
 import rateLimit from 'express-rate-limit'
 import dotenv from 'dotenv';
+import cors from 'cors'
 const app = express();
 dotenv.config();
 const limiter = rateLimit({
