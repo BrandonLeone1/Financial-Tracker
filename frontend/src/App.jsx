@@ -37,7 +37,7 @@ function App() {
   async function addUserMethod (newUser) {
     const response = await fetch(`${API_URL}/api/auth/signup`, {
       method: "POST",
-      withCredentials: true,
+      credentials: "include",
       headers:{"Content-Type": "application/json"},
       body: JSON.stringify(newUser)
     })
@@ -48,7 +48,7 @@ function App() {
   async function logInUserMethod (existingUser) {
     const response = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
-      withCredentials: true,
+      credentials: "include",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(existingUser)
     })
@@ -64,7 +64,7 @@ function App() {
     setIsLoading(true);
     try {
      const response = await fetch(`${API_URL}/api/auth/check`, {
-      withCredentials: true
+      credentials: "include"
      });
     const data = await response.json();
     if (data.success) {
@@ -92,7 +92,7 @@ function App() {
 async function addTransactionMethod (newTransaction) {
   const response = await fetch(`${API_URL}/api/transactions`, {
     method: "POST",
-    withCredentials: true,
+    credentials: "include",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(newTransaction)
   })
@@ -111,7 +111,7 @@ async function addTransactionMethod (newTransaction) {
 
 async function getTransactions() {
   const response = await fetch(`${API_URL}/api/transactions`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
 
@@ -123,7 +123,7 @@ async function getTransactions() {
 async function deleteTransactionMethod (id) {
   const response = await fetch(`${API_URL}/api/transactions/${id}`, {
     method: "DELETE",
-    withCredentials: true,
+    credentials: "include",
     headers: {"Content-Type": "application/json"}
   })
   const data = await response.json();
@@ -142,7 +142,7 @@ async function deleteTransactionMethod (id) {
 async function updateTransactionMethod (updatedTransaction) {
   const response = await fetch(`${API_URL}/api/transactions/${updatedTransaction._id}`, {
     method: "PUT",
-    withCredentials: true,
+    credentials: "include",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(updatedTransaction)
   });
@@ -162,7 +162,7 @@ async function updateTransactionMethod (updatedTransaction) {
 async function addBudgetMethod (newBudget) {
   const response = await fetch(`${API_URL}/api/budgets`, {
     method: "POST",
-    withCredentials: true,
+    credentials: "include",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(newBudget)
   })
@@ -181,7 +181,7 @@ async function addBudgetMethod (newBudget) {
 
 async function getBudgets () {
   const response = await fetch(`${API_URL}/api/budgets`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
 
@@ -193,7 +193,7 @@ async function getBudgets () {
 async function deleteBudget(id) {
   const response = await fetch(`${API_URL}/api/budgets/${id}`, {
     method: "DELETE",
-    withCredentials: true,
+    credentials: "include",
     headers: {"Content-Type": "application/json"}
   });
   const data = await response.json();
@@ -210,7 +210,7 @@ async function deleteBudget(id) {
 
 async function getBudgetInfo () {
   const response = await fetch(`${API_URL}/api/budgets/get-info`, {
-    withCredentials: true
+    credentials: "include",
   });
   const data = await response.json();
 
@@ -232,7 +232,7 @@ useEffect(() => {
 async function editBudget (id, updatedBudget) {
   const response = await fetch(`${API_URL}/api/budgets/${id}`, {
     method: "PUT",
-    withCredentials: true,
+    credentials: "include",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(updatedBudget)
   });
@@ -252,7 +252,7 @@ async function editBudget (id, updatedBudget) {
 async function getIncomeInfo () {
   setLoadingPieCharts(true)
   const response = await fetch(`${API_URL}/api/transactions/get-income-info`, {
-    withCredentials: true,
+    credentials: "include",
   });
   const data = await response.json();
   if (data.success) {
@@ -264,7 +264,7 @@ async function getIncomeInfo () {
 async function getExpenseInfo () {
   setLoadingPieCharts(true)
   const response = await fetch(`${API_URL}/api/transactions/get-expense-info`, {
-    withCredentials: true
+    credentials: "include"
   })
   const data = await response.json();
 
@@ -277,7 +277,7 @@ async function getExpenseInfo () {
 async function getExpensesOverTime () {
   setLoadingLineCharts(true)
   const response = await fetch (`${API_URL}/api/transactions/expenses-over-time`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
   if (data.success) {
@@ -289,7 +289,7 @@ async function getExpensesOverTime () {
 async function monthlyExpenseData () {
   setLoadingLineCharts(true)
   const response = await fetch (`${API_URL}/api/transactions/expenses-one-month`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
   if (data.success) {
@@ -300,7 +300,7 @@ async function monthlyExpenseData () {
 
 async function getBudgetRisks() {
   const response = await fetch(`${API_URL}/api/budgets/remaining-info`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
   if(data.success) {
@@ -310,7 +310,7 @@ async function getBudgetRisks() {
 
 async function getExpenseComparison() {
   const response = await fetch(`${API_URL}/api/transactions/comparison`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
   if (data.success) {
@@ -320,7 +320,7 @@ async function getExpenseComparison() {
 
 async function getIncomeWithinLastMonth () {
   const response = await fetch(`${API_URL}/api/transactions/income-last-month`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
   if (data.success) {
@@ -330,7 +330,7 @@ async function getIncomeWithinLastMonth () {
 
 async function getPreviousMonthIncomeAndExpenses() {
   const response = await fetch(`${API_URL}/api/transactions/income-and-expenses-previous-month`, {
-    withCredentials: true
+    credentials: "include"
   });
   const data = await response.json();
   if (data.success) {
