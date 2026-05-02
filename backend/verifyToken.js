@@ -5,6 +5,7 @@ dotenv.config();
 
 async function verifyToken(req, res, next) {
  const token = req.cookies.token;
+ console.log("COOKIES RECEIVED:", req.cookies);
     try { 
     if (!token) {
         return res.status(401).json({success: false, message: "Failed due to no token"})

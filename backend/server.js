@@ -29,7 +29,7 @@ const authLimiter = rateLimit({
 
 app.use(limiter);
 
-app.use(express.json());
+
 app.use(cookieParser());
 app.use(cors({
     origin: ["https://financial-tracker-sage.vercel.app",
@@ -37,6 +37,7 @@ app.use(cors({
     ],
     credentials: true
 }))
+app.use(express.json());
 
 app.post("/api/auth/signup", authLimiter, async (req, res) => {
     const {name, email, password} = req.body;
