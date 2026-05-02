@@ -32,7 +32,7 @@ app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ["https://financial-tracker-sage.vercel.app/",
+    origin: ["https://financial-tracker-sage.vercel.app",
         "http://localhost:5173"
     ],
     credentials: true
