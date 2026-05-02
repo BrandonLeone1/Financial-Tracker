@@ -35,36 +35,47 @@ function App() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   async function addUserMethod (newUser) {
+    const token = localStorage.getItem("token");
     const response = await fetch(`${API_URL}/api/auth/signup`, {
       method: "POST",
       credentials: "include",
-      headers:{"Content-Type": "application/json"},
+      headers:{"Content-Type": "application/json",
+       "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify(newUser)
     })
     const data = await response.json();
+    if (data.success) {
+      localStorage.setItem("token", data.token)
+    }
     
   }
 
   async function logInUserMethod (existingUser) {
+    const token = localStorage.getItem("token");
     const response = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       credentials: "include",
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify(existingUser)
     })
     const data = await response.json();
   
     if (data.success) {
-      setCurrentUser(data.user);
+      localStorage.setItem("token", data.token);
+      setCurrentUser(data.user)
     }
   }
 
   async function checkAuthAndGetUser () {
-    
+    const token = localStorage.getItem("token");
     setIsLoading(true);
     try {
      const response = await fetch(`${API_URL}/api/auth/check`, {
-      credentials: "include"
+      credentials: "include",
+      headers: {"Authorization": `Bearer ${token}`}
      });
     const data = await response.json();
     if (data.success) {
@@ -90,10 +101,13 @@ function App() {
 )
 
 async function addTransactionMethod (newTransaction) {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions`, {
     method: "POST",
     credentials: "include",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
     body: JSON.stringify(newTransaction)
   })
   const data = await response.json();
@@ -110,8 +124,10 @@ async function addTransactionMethod (newTransaction) {
 }
 
 async function getTransactions() {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
 
@@ -121,10 +137,13 @@ async function getTransactions() {
 }
 
 async function deleteTransactionMethod (id) {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions/${id}`, {
     method: "DELETE",
     credentials: "include",
-    headers: {"Content-Type": "application/json"}
+    headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
   })
   const data = await response.json();
 
@@ -140,10 +159,13 @@ async function deleteTransactionMethod (id) {
 }
 
 async function updateTransactionMethod (updatedTransaction) {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions/${updatedTransaction._id}`, {
     method: "PUT",
     credentials: "include",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
     body: JSON.stringify(updatedTransaction)
   });
   const data = await response.json();
@@ -160,10 +182,15 @@ async function updateTransactionMethod (updatedTransaction) {
 }
 
 async function addBudgetMethod (newBudget) {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/budgets`, {
     method: "POST",
     credentials: "include",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json",
+
+      "Authorization": `Bearer ${token}`
+    },
+
     body: JSON.stringify(newBudget)
   })
   const data = await response.json();
@@ -180,8 +207,10 @@ async function addBudgetMethod (newBudget) {
 }
 
 async function getBudgets () {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/budgets`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
 
@@ -191,10 +220,13 @@ async function getBudgets () {
 }
 
 async function deleteBudget(id) {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/budgets/${id}`, {
     method: "DELETE",
     credentials: "include",
-    headers: {"Content-Type": "application/json"}
+    headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
   });
   const data = await response.json();
   if (data.success) {
@@ -209,8 +241,10 @@ async function deleteBudget(id) {
 }
 
 async function getBudgetInfo () {
+ const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/budgets/get-info`, {
     credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
 
@@ -230,10 +264,13 @@ useEffect(() => {
 )
 
 async function editBudget (id, updatedBudget) {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/budgets/${id}`, {
     method: "PUT",
     credentials: "include",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
     body: JSON.stringify(updatedBudget)
   });
   const data = await response.json();
@@ -250,9 +287,11 @@ async function editBudget (id, updatedBudget) {
 }
 
 async function getIncomeInfo () {
+  const token = localStorage.getItem("token");
   setLoadingPieCharts(true)
   const response = await fetch(`${API_URL}/api/transactions/get-income-info`, {
     credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if (data.success) {
@@ -262,9 +301,11 @@ async function getIncomeInfo () {
 }
 
 async function getExpenseInfo () {
+ const token = localStorage.getItem("token");
   setLoadingPieCharts(true)
   const response = await fetch(`${API_URL}/api/transactions/get-expense-info`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   })
   const data = await response.json();
 
@@ -275,9 +316,11 @@ async function getExpenseInfo () {
 }
 
 async function getExpensesOverTime () {
+  const token = localStorage.getItem("token");
   setLoadingLineCharts(true)
   const response = await fetch (`${API_URL}/api/transactions/expenses-over-time`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if (data.success) {
@@ -287,9 +330,11 @@ async function getExpensesOverTime () {
 }
 
 async function monthlyExpenseData () {
+  const token = localStorage.getItem("token");
   setLoadingLineCharts(true)
   const response = await fetch (`${API_URL}/api/transactions/expenses-one-month`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if (data.success) {
@@ -299,8 +344,10 @@ async function monthlyExpenseData () {
 }
 
 async function getBudgetRisks() {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/budgets/remaining-info`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if(data.success) {
@@ -309,8 +356,10 @@ async function getBudgetRisks() {
 }
 
 async function getExpenseComparison() {
+ const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions/comparison`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if (data.success) {
@@ -319,8 +368,10 @@ async function getExpenseComparison() {
 }
 
 async function getIncomeWithinLastMonth () {
+  const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions/income-last-month`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if (data.success) {
@@ -329,8 +380,10 @@ async function getIncomeWithinLastMonth () {
 }
 
 async function getPreviousMonthIncomeAndExpenses() {
+ const token = localStorage.getItem("token");
   const response = await fetch(`${API_URL}/api/transactions/income-and-expenses-previous-month`, {
-    credentials: "include"
+    credentials: "include",
+    headers: {"Authorization": `Bearer ${token}`}
   });
   const data = await response.json();
   if (data.success) {

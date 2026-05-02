@@ -4,12 +4,14 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 async function verifyToken(req, res, next) {
- const token = req.cookies.token;
- console.log("COOKIES RECEIVED:", req.cookies);
+const authHeader = req.headers.authorization;
+
     try { 
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).json({success: false, message: "Failed due to no token"})
     }
+
+    const token = authHeader.split(" ")[1];
 
     const isTokenVerified = jwt.verify(token, process.env.JWT_SECRET);
     if (!isTokenVerified) {
