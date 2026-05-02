@@ -15,7 +15,7 @@ const app = express();
 dotenv.config();
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 400,
+    max: 800,
     message: 'You are sending requests too fast, Try again later',
     standardHeaders: true
 })
