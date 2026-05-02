@@ -65,7 +65,7 @@ function App() {
   
     if (data.success) {
       localStorage.setItem("token", data.token);
-      setCurrentUser(data.user)
+      await checkAuthAndGetUser();
     }
   }
 
