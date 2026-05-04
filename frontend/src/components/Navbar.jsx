@@ -17,15 +17,15 @@ export function Navbar () {
         <header className="w-full bg-white/80 border-b border-gray-300 sticky top-0 backdrop-blur-sm z-10">
             <nav className="flex justify-between p-6 max-w-6xl mx-auto">
             <div>
-                <Link to={`/dashboard`} className="text-2xl">Finance Tracker</Link>
+                <Link to={`/dashboard`} onClick={window.scrollTo(0,0)} className="text-2xl">Finance Tracker</Link>
             </div>
             
             <div className="md:flex gap-2 items-center text-lg hidden">
-                <NavLink to={`/dashboard`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Dashboard</NavLink>
+                <NavLink to={`/dashboard`}  onClick={window.scrollTo(0,0)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Dashboard</NavLink>
                 
-                <NavLink to={`/transactions`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Transactions</NavLink>
+                <NavLink to={`/transactions`}  onClick={window.scrollTo(0,0)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Transactions</NavLink>
 
-                <NavLink to={`/budgets`} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Budgets</NavLink>
+                <NavLink to={`/budgets`} onClick={window.scrollTo(0,0)} className={({isActive}) => isActive ? `after:scale-x-100 after:content-[''] after:w-[full] after:h-0.75 after:bg-indigo-400 after:block` : "after:content-[''] after:w-[full] after:scale-x-0 after:h-0.75 after:bg-indigo-400 after:block hover:after:scale-x-100 duration-300 after:duration-300"}>Budgets</NavLink>
             </div>
             </nav>
             
