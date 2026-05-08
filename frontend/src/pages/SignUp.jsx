@@ -1,7 +1,7 @@
 import { useState } from "react"
 import {Link} from 'react-router-dom'
 
-export function SignUp ({addUserMethod}) {
+export function SignUp ({addUserMethod, signedUpSuccessfully, signUpFailed}) {
     
     const [newUser, setNewUser] = useState({
         name: "",
@@ -21,7 +21,41 @@ export function SignUp ({addUserMethod}) {
     
     return (
         <>
-        
+        <AnimatePresence>
+        { signedUpSuccessfully && (
+            <motion.div 
+            initial={{opacity: 0, scale: 0.98, y: 40}}
+            animate={{opacity: 1, scale: 1, y: 0}}
+            exit={{opacity: 0, scale: 0.98, y: 40}}
+            transition={{duration: 0.25, ease: "easeInOut"}}
+            className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] translate-x-[-50%] text-center z-100">    
+                <div className="flex gap-2 items-center text-lg font-medium">
+                    <i className="fa-solid fa-square-check text-emerald-700"></i>
+                    <p>Added user!</p>
+                </div>
+            </motion.div>
+        )
+
+        }
+        </AnimatePresence>
+
+        <AnimatePresence>
+        { signUpFailed && (
+            <motion.div 
+            initial={{opacity: 0, scale: 0.98, y: 40}}
+            animate={{opacity: 1, scale: 1, y: 0}}
+            exit={{opacity: 0, scale: 0.98, y: 40}}
+            transition={{duration: 0.25, ease: "easeInOut"}}
+            className="bg-slate-100 shadow-md w-fit p-6 rounded-lg fixed bottom-15 left-[50%] translate-x-[-50%] text-center z-100">    
+                <div className="flex gap-2 items-center text-lg font-medium">
+                    <p>Failed. Please enter all info and use a proper email address.</p>
+                </div>
+            </motion.div>
+        )
+
+        }
+        </AnimatePresence>
+
         <div className="flex justify-center items-center h-screen">
 
             <div className="bg-white p-6 rounded-lg flex flex-col gap-2 text-gray-700">

@@ -32,6 +32,8 @@ function App() {
   const [previousMonthIncomeTotal, setPreviousMonthIncomeTotal] = useState(0);
   const [previousMonthExpenseTotal, setPreviousMonthExpenseTotal] = useState(0);
   const API_URL = import.meta.env.VITE_API_URL;
+  const [signedUpSuccessfully, setSignedUpSuccessfully] = useState(false);
+  const [signUpFailed, setSignUpFailed] = useState(false);
 
   async function addUserMethod (newUser) {
     const token = localStorage.getItem("token");
@@ -45,7 +47,18 @@ function App() {
     })
     const data = await response.json();
     if (data.success) {
-      localStorage.setItem("token", data.token)
+      localStorage.setItem("token", data.token);
+      setSignedUpSuccessfully(true);
+
+      setTimeout(() => {
+        setSignedUpSuccessfully(false);
+      }, 3000);
+    } else {
+      setSignUpFailed(true);
+
+      setTimeout(() => {
+        setSignUpFailed(false)
+      }, 3000);
     }
     
   }
@@ -404,7 +417,7 @@ function convertFormat (amount) {
       <Route 
       path='/'
       element={
-      <PublicRoute currentUser={currentUser} isLoading={isLoading}>
+      <PublicRoute currentUser={currentUser} isLoading={isLoading} signedUpSuccessfully={signedUpSuccessfully} signUpFailed={signUpFailed}>
       <SignUp addUserMethod={addUserMethod}/>
       </PublicRoute>
     }

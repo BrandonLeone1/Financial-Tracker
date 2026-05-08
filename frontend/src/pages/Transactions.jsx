@@ -60,6 +60,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         )
 
         }
+        </AnimatePresence>
 
         <AnimatePresence>
         { deletedTransaction && (
@@ -82,7 +83,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
         }
         </AnimatePresence>
 
-        </AnimatePresence>
+    
         <div className="flex flex-col max-w-5xl mx-auto p-6">
         <p className="text-center text-3xl mt-12 font-semibold">Transactions</p>
         { transactions.length < 1 ? (
