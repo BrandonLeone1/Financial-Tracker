@@ -9,7 +9,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
     const [addingTransaction, setAddingTransaction] = useState(false);
     const [newTransaction, setNewTransaction] = useState({
         classification: "",
-        amount: 0,
+        amount: "",
         category: "",
         date: "",
         note: ""
@@ -25,7 +25,7 @@ export function Transactions ({transactions, deletedTransaction, addTransactionM
 
         setNewTransaction({
             classification: "",
-            amount: 0,
+            amount: "",
             category: "",
             date: "",
             note: ""

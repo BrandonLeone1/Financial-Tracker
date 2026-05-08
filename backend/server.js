@@ -43,7 +43,7 @@ app.post("/api/auth/signup", authLimiter, async (req, res) => {
     const {name, email, password} = req.body;
 
     try {
-        if (!name || !email || !password || typeof name !== "string" || typeof email !== "string" || typeof password !== "string" ){
+        if (!name || !email || !password || typeof name !== "string" || typeof email !== "string" || typeof password !== "string" || !email.includes("@") ){
             return res.status(401).json({success: false, message: "Failed to sign up. Please fill in all fields or enter proper data type."});
         };
         const userAlreadyExists = await User.findOne({email});

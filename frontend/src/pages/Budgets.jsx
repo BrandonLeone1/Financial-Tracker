@@ -20,7 +20,7 @@ export function Budgets({budgets, getBudgets, addBudgetMethod, deletedBudget, ad
     
     const [newBudget, setNewBudget] = useState({
         category: "",
-        limit: 0
+        limit: ""
     })
 
     async function handleAddClick () {
@@ -29,7 +29,7 @@ export function Budgets({budgets, getBudgets, addBudgetMethod, deletedBudget, ad
 
         setNewBudget({
             category: "",
-            limit: 0
+            limit: ""
         })
         setAddingBudget(false)
     }
