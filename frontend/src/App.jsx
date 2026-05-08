@@ -417,8 +417,8 @@ function convertFormat (amount) {
       <Route 
       path='/'
       element={
-      <PublicRoute currentUser={currentUser} isLoading={isLoading} signedUpSuccessfully={signedUpSuccessfully} signUpFailed={signUpFailed}>
-      <SignUp addUserMethod={addUserMethod}/>
+      <PublicRoute currentUser={currentUser} isLoading={isLoading} >
+      <SignUp addUserMethod={addUserMethod} signedUpSuccessfully={signedUpSuccessfully} signUpFailed={signUpFailed}/>
       </PublicRoute>
     }
       />
